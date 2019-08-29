@@ -1,0 +1,8 @@
+.close-btn {
+  color: maroon !important;
+  float: right;
+  opacity: 0.5;
+  &:hover {
+    opacity: 1 !important;
+  }
+}
