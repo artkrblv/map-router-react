@@ -4,11 +4,13 @@
   margin-top: 15px;
   margin-left: 15px;
 }
-
+.App {
+  height: inherit;
+}
 .right-side {
   float: right;
   width: 50%;
-  height: 100vh;
+  height: inherit;
 }
 
 .input-group-prepend {
