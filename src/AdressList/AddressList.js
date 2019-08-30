@@ -15,16 +15,12 @@ class AddressList extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            addressList: this.props.addressList,
-            coordinateList: this.props.coordinateList
-        };
         this.updateList = this.updateList.bind(this);
     }
 
     updateList(result) {
-        let addresses = this.state.addressList;
-        let coordinates = this.state.coordinateList;
+        let addresses = this.props.addressList;
+        let coordinates = this.props.coordinateList;
 
         if (typeof result != 'number') {  // при перетаскивании элемента result является объектом, при удалении - числом
             if (!result.destination) {
@@ -45,10 +41,6 @@ class AddressList extends React.Component {
             coordinates.splice(result, 1);
         }
 
-        this.setState({
-            addressList: addresses,
-            coordinateList: coordinates
-        });
         this.props.updateParentStateCallback(addresses, coordinates);
     }
 
@@ -61,8 +53,8 @@ class AddressList extends React.Component {
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
-                            {this.state.addressList.map((address, index) => (
-                                <Draggable key={address + index} draggableId={address} index={index}>
+                            {this.props.addressList.map((address, index) => (
+                                <Draggable key={index} draggableId={index.toString()} index={index}>
                                     {(provided) => (
                                         <div
                                             ref={provided.innerRef}
@@ -70,12 +62,11 @@ class AddressList extends React.Component {
                                             {...provided.dragHandleProps}
                                         >
                                             <li className="list-group-item">
-                                                <div className="text">{address}
-                                                    <a className="close-btn" href="#!"
-                                                       onClick={() => this.updateList(index)}>
-                                                        <Octicon icon={X}/>
-                                                    </a>
-                                                </div>
+                                                <span className="address-text">{address}</span>
+                                                <a className="close-btn" href="#!"
+                                                   onClick={() => this.updateList(index)}>
+                                                    <Octicon icon={X}/>
+                                                </a>
                                             </li>
                                         </div>
                                     )}

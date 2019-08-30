@@ -22,13 +22,32 @@ class App extends React.Component {
         });
     }
 
+    renameListItem(index, newCoordinate) {
+        const ymaps = window.ymaps;
+        ymaps.geocode(newCoordinate)
+            .then(resp => {
+                const newName = resp.geoObjects.get(0).properties.getAll().text;
+                let coords = [...this.state.coordinates];
+                let addrs = [...this.state.addresses];
+                coords[index] = newCoordinate;
+                addrs[index] = newName;
+
+                this.setState({
+                    coordinates: coords,
+                    addresses: addrs
+                })
+            });
+
+    }
+
     addPoint(address) {
         const ymaps = window.ymaps;
         ymaps.geocode(address)
             .then((result) => {
                 const addedPoint = result.geoObjects.get(0).geometry.getCoordinates();
-                let points = this.state.coordinates;
+                let points = [...this.state.coordinates];
                 points.push(addedPoint);
+
                 this.setState({coordinates: points});
             })
     }
@@ -72,15 +91,17 @@ class App extends React.Component {
                     <YMaps>
                         <Map defaultState={{center: [55.843242, 37.582168], zoom: 12}} width='100%' height='100%'
                              id='map'>
+
                             <ZoomControl options={{float: 'right'}}/>
                             {this.state.coordinates.map((coordinate, index) =>
                                 <Placemark key={index}
+                                           onDragEnd={(e) => this.renameListItem(index, e.get('target').geometry.getCoordinates())}
                                            geometry={coordinate}
                                            options={{draggable: true}}
                                            properties={{iconContent: index + 1}}
                                 />
                             )}
-                            <Polyline geometry={this.state.coordinates}
+                            <Polyline geometry={[...this.state.coordinates]}
                                       options={{
                                           balloonCloseButton: false,
                                           strokeColor: '#000',

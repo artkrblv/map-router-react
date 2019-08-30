@@ -8,12 +8,14 @@
 .right-side {
   float: right;
   width: 50%;
-  height: 95vh;
+  height: 100vh;
 }
 
 .input-group-prepend {
-  padding: 3%;
-  background-color: whitesmoke;
+  padding: 10px;
   color: darkred;
-
+  border: 1px solid #ced4da;
+  background-color: #FAFAFA;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
 }
