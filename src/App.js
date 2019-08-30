@@ -89,7 +89,7 @@ class App extends React.Component {
 
                 <div className="right-side">
                     <YMaps>
-                        <Map defaultState={{center: [55.843242, 37.582168], zoom: 12}} width='100%' height='100%'
+                        <Map defaultState={{center: [55.753215, 37.622504], zoom: 12}} width='100%' height='100%'
                              id='map'>
 
                             <ZoomControl options={{float: 'right'}}/>
